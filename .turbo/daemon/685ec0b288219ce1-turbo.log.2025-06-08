@@ -58,3 +58,7 @@
 2025-06-08T23:33:41.251017Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
 2025-06-08T23:33:41.350898Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("test.cloud.earthcare.network")}
 2025-06-08T23:33:41.350907Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-08T23:38:36.059806Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".gitignore")}
+2025-06-08T23:38:36.060780Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-08T23:38:36.146239Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".gitignore")}
+2025-06-08T23:38:36.146249Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
