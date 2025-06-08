@@ -118,3 +118,15 @@
 2025-06-08T23:42:42.850920Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
 2025-06-08T23:42:46.138952Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".github/workflows/test.yml")}
 2025-06-08T23:42:46.138987Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-08T23:45:58.344197Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("Dockerfile")}
+2025-06-08T23:45:58.345697Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-08T23:45:59.634057Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("Dockerfile")}
+2025-06-08T23:45:59.634065Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-08T23:45:59.733366Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("Dockerfile")}
+2025-06-08T23:45:59.733376Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-08T23:46:04.895476Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("next.config.js")}
+2025-06-08T23:46:04.895554Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-08T23:46:04.934072Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("next.config.js")}
+2025-06-08T23:46:04.934168Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-08T23:46:05.133463Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("_static/trace")}
+2025-06-08T23:46:05.133475Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
