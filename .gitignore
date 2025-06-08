@@ -1,3 +1,25 @@
+# Environment files
+.env
+.env.*
+!.env.example
+.github/workflows/.env
+.github/workflows/.env.*
+
+# Dependencies
 node_modules/
-.next/
-/_static
+.pnp/
+.pnp.js
+
+# Testing
+coverage/
+
+# Production
+build/
+dist/
+out/
+
+# Misc
+.DS_Store
+*.pem
+.vercel
+.turbo
