@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  app:
+    image: ghcr.io/${GITHUB_REPOSITORY}:test
+    restart: always
+    environment:
+      - NODE_ENV=test
+    ports:
+      - "3000:3000"
+    volumes:
+      - /var/www/launchpad-ai-test/uploads:/app/uploads 

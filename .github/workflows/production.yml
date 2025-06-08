@@ -1,0 +1,39 @@
+name: Production Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Build and push Docker images
+      run: |
+        docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:production .
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:production
+        
+    - name: Deploy to Production
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.PRODUCTION_DROPLET_HOST }}
+        username: ${{ secrets.PRODUCTION_DROPLET_USERNAME }}
+        key: ${{ secrets.PRODUCTION_DROPLET_SSH_KEY }}
+        script: |
+          cd /var/www/launchpad-ai
+          docker-compose pull
+          docker-compose up -d 

@@ -1,0 +1,39 @@
+name: Staging Deployment
+
+on:
+  push:
+    branches: [ staging ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Build and push Docker images
+      run: |
+        docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:staging .
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:staging
+        
+    - name: Deploy to Staging
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.STAGING_DROPLET_HOST }}
+        username: ${{ secrets.STAGING_DROPLET_USERNAME }}
+        key: ${{ secrets.STAGING_DROPLET_SSH_KEY }}
+        script: |
+          cd /var/www/launchpad-ai-staging
+          docker-compose pull
+          docker-compose up -d 
