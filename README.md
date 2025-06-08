@@ -56,3 +56,9 @@ When you no longer need this sample application running live, you can delete it 
 3. In the **Settings** tab, click **Destroy**.
 
 **Note**: If you do not delete your app, charges for using DigitalOcean services will continue to accrue.
+
+## Deployment Status
+
+- Test Environment: [test.cloud.earthcare.network](https://test.cloud.earthcare.network)
+- Last Deployed: $(date +%Y-%m-%d)
+- Status: Active
