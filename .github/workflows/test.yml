@@ -15,6 +15,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+    - name: Install Docker Compose
+      run: |
+        sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        docker-compose --version
+    
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v2
       with:
@@ -35,6 +41,33 @@ jobs:
         username: ${{ secrets.TEST_DROPLET_USERNAME }}
         key: ${{ secrets.TEST_DROPLET_SSH_KEY }}
         script: |
+          # Install Docker Compose if not present
+          if ! command -v docker-compose &> /dev/null; then
+            curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            chmod +x /usr/local/bin/docker-compose
+          fi
+          
+          # Ensure deployment directory exists
+          mkdir -p /var/www/launchpad-ai-test
+          
+          # Copy docker-compose file if it doesn't exist
+          if [ ! -f /var/www/launchpad-ai-test/docker-compose.yml ]; then
+            cat > /var/www/launchpad-ai-test/docker-compose.yml << 'EOL'
+            version: '3.8'
+            services:
+              app:
+                image: ghcr.io/${GITHUB_REPOSITORY}:test
+                restart: always
+                environment:
+                  - NODE_ENV=test
+                ports:
+                  - "3000:3000"
+                volumes:
+                  - /var/www/launchpad-ai-test/uploads:/app/uploads
+            EOL
+          fi
+          
+          # Deploy the application
           cd /var/www/launchpad-ai-test
           docker-compose pull
           docker-compose up -d 
