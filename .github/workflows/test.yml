@@ -64,11 +64,11 @@ jobs:
           mkdir -p /var/www/launchpad-ai-test
           
           # Create docker-compose file
-          cat > /var/www/launchpad-ai-test/docker-compose.yml << 'EOF'
+          cat > /var/www/launchpad-ai-test/docker-compose.yml << EOF
           version: '3.8'
           services:
             app:
-              image: ghcr.io/${GITHUB_REPOSITORY}/test:latest
+              image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/test:latest
               restart: always
               environment:
                 - NODE_ENV=test
