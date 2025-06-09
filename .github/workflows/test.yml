@@ -50,22 +50,20 @@ jobs:
           # Ensure deployment directory exists
           mkdir -p /var/www/launchpad-ai-test
           
-          # Copy docker-compose file if it doesn't exist
-          if [ ! -f /var/www/launchpad-ai-test/docker-compose.yml ]; then
-            cat > /var/www/launchpad-ai-test/docker-compose.yml << 'EOL'
-            version: '3.8'
-            services:
-              app:
-                image: ghcr.io/${GITHUB_REPOSITORY}:test
-                restart: always
-                environment:
-                  - NODE_ENV=test
-                ports:
-                  - "3000:3000"
-                volumes:
-                  - /var/www/launchpad-ai-test/uploads:/app/uploads
-            EOL
-          fi
+          # Create docker-compose file
+          cat > /var/www/launchpad-ai-test/docker-compose.yml << 'EOF'
+          version: '3.8'
+          services:
+            app:
+              image: ghcr.io/${GITHUB_REPOSITORY}:test
+              restart: always
+              environment:
+                - NODE_ENV=test
+              ports:
+                - "3000:3000"
+              volumes:
+                - /var/www/launchpad-ai-test/uploads:/app/uploads
+          EOF
           
           # Deploy the application
           cd /var/www/launchpad-ai-test
