@@ -15,24 +15,30 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Install Docker Compose
-      run: |
-        sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-        sudo chmod +x /usr/local/bin/docker-compose
-        docker-compose --version
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
     
     - name: Login to GitHub Container Registry
-      uses: docker/login-action@v2
+      uses: docker/login-action@v3
       with:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Build and push Docker images
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:test
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        
+    - name: Install Docker Compose
       run: |
-        IMAGE_NAME_LOWER=$(echo "${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]')
-        docker build -t ${{ env.REGISTRY }}/${IMAGE_NAME_LOWER}:test .
-        docker push ${{ env.REGISTRY }}/${IMAGE_NAME_LOWER}:test
+        sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        docker-compose --version
         
     - name: Deploy to Test
       uses: appleboy/ssh-action@master
@@ -41,10 +47,17 @@ jobs:
         username: ${{ secrets.TEST_DROPLET_USERNAME }}
         key: ${{ secrets.TEST_DROPLET_SSH_KEY }}
         script: |
+          # Install Docker if not present
+          if ! command -v docker &> /dev/null; then
+            curl -fsSL https://get.docker.com -o get-docker.sh
+            sudo sh get-docker.sh
+            sudo usermod -aG docker $USER
+          fi
+          
           # Install Docker Compose if not present
           if ! command -v docker-compose &> /dev/null; then
-            curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-            chmod +x /usr/local/bin/docker-compose
+            sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
           fi
           
           # Ensure deployment directory exists
