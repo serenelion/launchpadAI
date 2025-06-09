@@ -18,8 +18,12 @@ build/
 dist/
 out/
 
+# Next.js
+.next/
+_static/
+.turbo/
+
 # Misc
 .DS_Store
 *.pem
 .vercel
-.turbo
